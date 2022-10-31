@@ -24,7 +24,11 @@
             v-for="(lesson, index) in chapter.lessons"
             :key="lesson.slug"
             class="flex flex-row space-x-1 no-underline prose-sm font-normal py-1 px-4 -mx-4"
-            :to="`/course/chapter/${chapter.slug}/lesson/${lesson.slug}`"
+            :class="{
+              'text-blue-500': lesson.path === $route.fullPath,
+              'text-gray-600': lesson.path !== $route.fullPath,
+            }"
+            :to="lesson.path"
           >
             <span class="text-gray-500">
               {{ index + 1 }}
