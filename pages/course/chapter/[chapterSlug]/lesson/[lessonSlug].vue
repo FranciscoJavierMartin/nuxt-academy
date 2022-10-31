@@ -56,9 +56,7 @@ useHead({
   title,
 });
 
-const progress = useState('progress', () => {
-  return [];
-});
+const progress = useLocalStorage('progress', []);
 
 const isLessonCompleted = computed(() => {
   let isCompleted: boolean;
