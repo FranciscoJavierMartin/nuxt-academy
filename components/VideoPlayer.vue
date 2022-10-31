@@ -15,7 +15,7 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
   videoId: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
