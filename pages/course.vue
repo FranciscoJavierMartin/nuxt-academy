@@ -3,7 +3,7 @@
     <h1>
       <span class="font-medium">
         Course:
-        <span class="font-bold">Mastering Nuxt 3</span>
+        <span class="font-bold">{{ title }}</span>
       </span>
     </h1>
   </div>
@@ -58,7 +58,7 @@
 
 <script lang="ts" setup>
 import { useCourse } from '@/composables/useCourse';
-const { chapters } = useCourse();
+const { chapters, title } = useCourse();
 
 async function resetError(error): Promise<void> {
   if (chapters.length && chapters[0].lessons.length) {
