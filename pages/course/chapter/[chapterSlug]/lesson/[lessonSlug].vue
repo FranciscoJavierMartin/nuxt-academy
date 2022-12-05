@@ -71,8 +71,6 @@ definePageMeta({
           })
         );
       }
-
-      return true;
     },
     'auth',
   ],
