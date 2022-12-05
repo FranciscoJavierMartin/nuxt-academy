@@ -33,12 +33,16 @@
 import { computed } from 'vue';
 import { useCourse } from '@/composables/useCourse';
 import { Chapter } from '@/types/course';
+import { RouteLocationNormalized } from 'vue-router';
 
 const course = useCourse();
 const route = useRoute();
 
 definePageMeta({
-  validate({ params }) {
+  middleware: (
+    { params }: RouteLocationNormalized,
+    from: RouteLocationNormalized
+  ) => {
     const course = useCourse();
 
     const chapter: Chapter = course.chapters.find(
@@ -46,10 +50,12 @@ definePageMeta({
     );
 
     if (!chapter) {
-      throw createError({
-        statusCode: 404,
-        message: 'Chapter not found',
-      });
+      throw abortNavigation(
+        createError({
+          statusCode: 404,
+          message: 'Chapter not found',
+        })
+      );
     }
 
     const existsLesson: boolean = chapter.lessons.some(
@@ -57,10 +63,12 @@ definePageMeta({
     );
 
     if (!existsLesson) {
-      throw createError({
-        statusCode: 404,
-        message: 'Lesson not found',
-      });
+      throw abortNavigation(
+        createError({
+          statusCode: 404,
+          message: 'Lesson not found',
+        })
+      );
     }
 
     return true;
