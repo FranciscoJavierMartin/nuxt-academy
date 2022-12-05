@@ -32,9 +32,40 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useCourse } from '@/composables/useCourse';
+import { Chapter } from '@/types/course';
 
 const course = useCourse();
 const route = useRoute();
+
+definePageMeta({
+  validate({ params }) {
+    const course = useCourse();
+
+    const chapter: Chapter = course.chapters.find(
+      (chapter) => chapter.slug === params.chapterSlug
+    );
+
+    if (!chapter) {
+      throw createError({
+        statusCode: 404,
+        message: 'Chapter not found',
+      });
+    }
+
+    const existsLesson: boolean = chapter.lessons.some(
+      (lesson) => lesson.slug === params.lessonSlug
+    );
+
+    if (!existsLesson) {
+      throw createError({
+        statusCode: 404,
+        message: 'Lesson not found',
+      });
+    }
+
+    return true;
+  },
+});
 
 const chapter = computed(() => {
   return course.chapters.find(
