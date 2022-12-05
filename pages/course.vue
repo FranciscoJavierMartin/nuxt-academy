@@ -34,7 +34,24 @@
       </div>
     </div>
     <div class="prose p-12 bg-white rounded-md w-[65ch]">
-      <NuxtPage />
+      <NuxtErrorBoundary>
+        <NuxtPage />
+        <template #error="{ error }">
+          <p>
+            Oh no, something went wrong with the lesson!
+
+            <code>{{ error }}</code>
+          </p>
+          <p>
+            <button
+              class="hover:cursor-pointer bg-gray-500 text-white font-bold py-1 px-3 rounded"
+              @click="resetError(error)"
+            >
+              Go to first lesson
+            </button>
+          </p>
+        </template>
+      </NuxtErrorBoundary>
     </div>
   </div>
 </template>
@@ -42,4 +59,11 @@
 <script lang="ts" setup>
 import { useCourse } from '@/composables/useCourse';
 const { chapters } = useCourse();
+
+async function resetError(error): Promise<void> {
+  if (chapters.length && chapters[0].lessons.length) {
+    await navigateTo(chapters[0].lessons[0].path);
+  }
+  error.value = null;
+}
 </script>
