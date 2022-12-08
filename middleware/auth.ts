@@ -2,9 +2,12 @@ import { RouteLocationNormalized } from 'vue-router';
 
 export default defineNuxtRouteMiddleware(
   (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    if (to.params.chapterSlug === '1-chapter-1') {
+    const user = useSupabaseUser();
+
+    if (user.value || to.params.chapterSlug === '1-chapter-1') {
       return;
     }
-    return navigateTo('/login');
+
+    return navigateTo(`/login?redirectTo=${to.path}`);
   }
 );

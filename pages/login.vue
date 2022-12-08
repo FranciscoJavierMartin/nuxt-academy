@@ -11,12 +11,26 @@
 </template>
 
 <script setup lang="ts">
+const { query } = useRoute();
 const { title } = useCourse();
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
+
+watchEffect(async () => {
+  if (user.value) {
+    await navigateTo(query.redirectTo as string, {
+      replace: true,
+    });
+  }
+});
 
 async function login(): Promise<void> {
+  const redirectTo = `${window.location.origin}${query.redirectTo}`;
   // TODO: Fix login with Github
-  const { error } = await supabase.auth.signInWithOAuth({ provider: 'github' });
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: { redirectTo },
+  });
 
   if (error) {
     console.log(error);
