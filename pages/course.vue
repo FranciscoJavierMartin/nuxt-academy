@@ -41,7 +41,6 @@
           <template #error="{ error }">
             <p>
               Oh no, something went wrong with the lesson!
-
               <code>{{ error }}</code>
             </p>
             <p>
@@ -63,7 +62,7 @@
 import { useCourse } from '@/composables/useCourse';
 const { chapters, title } = useCourse();
 
-async function resetError(error): Promise<void> {
+async function resetError(error: any): Promise<void> {
   if (chapters.length && chapters[0].lessons.length) {
     await navigateTo(chapters[0].lessons[0].path);
   }
