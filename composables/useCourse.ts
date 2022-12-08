@@ -1,4 +1,4 @@
-import courseData from '@/courseData';
+import courseData from '@/server/courseData';
 import { Chapter, Course, Lesson } from '@/types/course';
 
 export const useCourse = (): Course => {

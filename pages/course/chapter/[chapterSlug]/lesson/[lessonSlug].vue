@@ -48,7 +48,7 @@ definePageMeta({
 
       const chapter: Chapter = course.chapters.find(
         (chapter) => chapter.slug === params.chapterSlug
-      );
+      )!;
 
       if (!chapter) {
         throw abortNavigation(
@@ -79,7 +79,7 @@ definePageMeta({
 const chapter = computed(() => {
   return course.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
-  );
+  )!;
 });
 
 if (!chapter.value) {
@@ -92,7 +92,7 @@ if (!chapter.value) {
 const lesson = computed(() => {
   return chapter.value.lessons.find(
     (lesson) => lesson.slug === route.params.lessonSlug
-  );
+  )!;
 });
 
 if (!chapter.value) {
@@ -110,7 +110,7 @@ useHead({
   title,
 });
 
-const progress = useLocalStorage('progress', []);
+const progress = useLocalStorage<boolean[][]>('progress', []);
 
 const isLessonCompleted = computed(() => {
   let isCompleted: boolean;

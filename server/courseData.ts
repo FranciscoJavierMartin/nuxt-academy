@@ -1,4 +1,6 @@
-export default {
+import { Course } from '~~/types/course';
+
+const courseData: Course = {
   title: 'TypeScript with Vue.js 3',
   chapters: [
     {
@@ -137,3 +139,5 @@ We also answer the question: “Are there any cases when you wouldn’t want to 
     },
   ],
 };
+
+export default courseData;
