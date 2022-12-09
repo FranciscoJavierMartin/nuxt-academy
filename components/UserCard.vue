@@ -18,10 +18,10 @@
 const user = useSupabaseUser();
 const { auth } = useSupabaseClient();
 
-const name = computed(() => user?.value.user_metadata.full_name);
+const name = computed(() => user.value?.user_metadata.full_name);
 const profile = computed(
   () =>
-    user?.value.user_metadata.avatar_url ??
+    user.value?.user_metadata.avatar_url ??
     'https://avatars.githubusercontent.com/u/23464945?v=4'
 );
 

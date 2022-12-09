@@ -102,7 +102,7 @@ if (!chapter.value) {
   });
 }
 
-const title = computed(() => {
+const title = computed<string>(() => {
   return `${lesson.value.title} - ${course.title}`;
 });
 
@@ -112,7 +112,7 @@ useHead({
 
 const progress = useLocalStorage<boolean[][]>('progress', []);
 
-const isLessonCompleted = computed(() => {
+const isLessonCompleted = computed<boolean>(() => {
   let isCompleted: boolean;
 
   if (!progress.value[chapter.value.number - 1]) {

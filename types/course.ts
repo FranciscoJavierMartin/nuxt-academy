@@ -6,14 +6,17 @@ export type Lesson = {
   videoId: number;
   text: string;
   sourceUrl?: string;
-  path?: string;
+};
+
+export type LessonWithPath = Lesson & {
+  path: string;
 };
 
 export type Chapter = {
   title: string;
   slug: string;
   number: number;
-  lessons: Lesson[];
+  lessons: Lesson[] | LessonWithPath[];
 };
 
 export type Course = {

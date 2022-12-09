@@ -60,6 +60,7 @@
 
 <script lang="ts" setup>
 import { useCourse } from '@/composables/useCourse';
+import { LessonWithPath } from '@/types/course';
 const { chapters, title } = useCourse();
 
 async function resetError(error: any): Promise<void> {
