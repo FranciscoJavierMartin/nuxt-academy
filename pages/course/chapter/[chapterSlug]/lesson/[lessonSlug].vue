@@ -37,6 +37,8 @@ import { RouteLocationNormalized } from 'vue-router';
 
 const course = useCourse();
 const route = useRoute();
+const { chapterSlug, lessonSlug } = route.params;
+const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
 
 definePageMeta({
   middleware: [
@@ -89,13 +91,7 @@ if (!chapter.value) {
   });
 }
 
-const lesson = computed(() => {
-  return chapter.value.lessons.find(
-    (lesson) => lesson.slug === route.params.lessonSlug
-  )!;
-});
-
-if (!chapter.value) {
+if (!lesson.value) {
   throw createError({
     statusCode: 404,
     message: 'Lesson not found',
@@ -133,7 +129,7 @@ const toggleComplete = () => {
   if (!progress.value[chapter.value.number - 1]) {
     progress.value[chapter.value.number - 1] = [];
   }
-  progress.value[chapter.value.number - 1][lesson.value.number - 1] =
+  progress.value[chapter.value.number - 1][lesson.value!.number - 1] =
     !isLessonCompleted.value;
 };
 </script>

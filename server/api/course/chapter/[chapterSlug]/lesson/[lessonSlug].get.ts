@@ -17,7 +17,7 @@ export default defineEventHandler((event): LessonWithPath => {
 
   const lesson: Maybe<Lesson> = chapter.lessons.find(
     (lesson) => lesson.slug === lessonSlug
-  )!;
+  );
 
   if (!lesson) {
     throw createError({
