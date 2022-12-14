@@ -4,7 +4,7 @@
       <h1 class="text-3xl">
         <span class="font-medium">
           Course:
-          <span class="font-bold">{{ title }}</span>
+          <span class="font-bold">{{ course.title }}</span>
         </span>
       </h1>
       <UserCard />
@@ -16,7 +16,7 @@
         <h3>Chapters</h3>
         <div
           class="space-y-1 mb-4 flex flex-col"
-          v-for="chapter in chapters"
+          v-for="chapter in course.chapters"
           :key="chapter.slug"
         >
           <h4>{{ chapter.title }}</h4>
@@ -59,14 +59,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useCourse } from '@/composables/useCourse';
-import { LessonWithPath } from '@/types/course';
-const { chapters, title } = useCourse();
+const course = await useCourse();
+const firstLesson = await useFirstLesson();
 
 async function resetError(error: any): Promise<void> {
-  if (chapters.length && chapters[0].lessons.length) {
-    await navigateTo(chapters[0].lessons[0].path);
-  }
+  await navigateTo(firstLesson.path);
   error.value = null;
 }
 </script>

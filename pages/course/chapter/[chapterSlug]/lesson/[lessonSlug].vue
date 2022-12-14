@@ -31,24 +31,23 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useCourse } from '@/composables/useCourse';
 import { Chapter } from '@/types/course';
 import { RouteLocationNormalized } from 'vue-router';
 
-const course = useCourse();
+const course = await useCourse();
 const route = useRoute();
 const { chapterSlug, lessonSlug } = route.params;
 const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
 
 definePageMeta({
   middleware: [
-    function (
+    async function (
       { params }: RouteLocationNormalized,
       from: RouteLocationNormalized
     ) {
-      const course = useCourse();
+      const course = await useCourse();
 
-      const chapter: Chapter = course.chapters.find(
+      const chapter = course.value.chapters.find(
         (chapter) => chapter.slug === params.chapterSlug
       )!;
 
@@ -79,7 +78,7 @@ definePageMeta({
 });
 
 const chapter = computed(() => {
-  return course.chapters.find(
+  return course.value.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
   )!;
 });
@@ -99,7 +98,7 @@ if (!lesson.value) {
 }
 
 const title = computed<string>(() => {
-  return `${lesson.value.title} - ${course.title}`;
+  return `${lesson.value.title} - ${course.value.title}`;
 });
 
 useHead({
