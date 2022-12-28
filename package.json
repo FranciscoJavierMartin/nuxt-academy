@@ -13,6 +13,13 @@
     "@tailwindcss/typography": "0.5.8",
     "@vueuse/core": "9.6.0",
     "@vueuse/nuxt": "9.6.0",
-    "nuxt": "3.0.0"
+    "nuxt": "3.0.0",
+    "prisma": "4.8.0"
+  },
+  "dependencies": {
+    "@prisma/client": "4.8.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
   }
 }
