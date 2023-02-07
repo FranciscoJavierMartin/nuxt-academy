@@ -17,7 +17,9 @@
     "prisma": "4.8.0"
   },
   "dependencies": {
-    "@prisma/client": "4.8.0"
+    "@pinia/nuxt": "^0.4.6",
+    "@prisma/client": "4.8.0",
+    "pinia": "^2.0.30"
   },
   "prisma": {
     "seed": "node prisma/seed.mjs"
