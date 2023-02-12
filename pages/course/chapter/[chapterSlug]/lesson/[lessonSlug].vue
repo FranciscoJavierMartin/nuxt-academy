@@ -37,12 +37,12 @@ import { RouteLocationNormalized } from 'vue-router';
 import { useCourseProgress } from '~/stores/courseProgress';
 
 const course = await useCourse();
+const user = useSupabaseUser();
 const route = useRoute();
 const { chapterSlug, lessonSlug } = route.params;
 const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
 const store = useCourseProgress();
 const { initialize, toggleComplete } = store;
-const user = useSupabaseUser();
 
 initialize();
 
