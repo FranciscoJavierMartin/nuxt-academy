@@ -32,5 +32,24 @@ export default defineEventHandler(async (event) => {
     user: { email: userEmail },
   } = event.context;
 
-  return prisma.lesson
+  return prisma.lessonProgress.upsert({
+    where: {
+      lessonId_userEmail: {
+        lessonId: lesson.id,
+        userEmail,
+      },
+    },
+    update: {
+      completed,
+    },
+    create: {
+      completed,
+      userEmail,
+      Lesson: {
+        connect: {
+          id: lesson.id,
+        },
+      },
+    },
+  });
 });
