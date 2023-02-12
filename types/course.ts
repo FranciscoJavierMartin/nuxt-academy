@@ -13,7 +13,15 @@ export type Chapter = {
   lessons: Lesson[] | LessonWithPath[];
 };
 
+export type ChapterProgress = {
+  [key: string]: boolean;
+};
+
 export type Course = {
   title: string;
   chapters: Chapter[];
+};
+
+export type CourseProgress = {
+  [key: string]: ChapterProgress;
 };
