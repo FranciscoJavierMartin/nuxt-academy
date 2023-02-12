@@ -23,7 +23,8 @@
     <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
     <p>{{ lesson.text }}</p>
     <LessonCompleteButton
-      :model-value="isLessonCompleted"
+      v-if="user"
+      :model-value="!!isCompleted"
       @update:model-value="toggleComplete"
     />
   </div>
@@ -33,11 +34,17 @@
 import { computed } from 'vue';
 import { Chapter } from '@/types/course';
 import { RouteLocationNormalized } from 'vue-router';
+import { useCourseProgress } from '~/stores/courseProgress';
 
 const course = await useCourse();
 const route = useRoute();
 const { chapterSlug, lessonSlug } = route.params;
 const lesson = await useLesson(chapterSlug as string, lessonSlug as string);
+const store = useCourseProgress();
+const { initialize, toggleComplete } = store;
+const user = useSupabaseUser();
+
+initialize();
 
 definePageMeta({
   middleware: [
@@ -77,6 +84,12 @@ definePageMeta({
   ],
 });
 
+const isCompleted = computed(
+  () =>
+    (store.progress as any)?.[chapterSlug as string]?.[lessonSlug as string] ||
+    0
+);
+
 const chapter = computed(() => {
   return course.value.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -104,31 +117,4 @@ const title = computed<string>(() => {
 useHead({
   title,
 });
-
-const progress = useLocalStorage<boolean[][]>('progress', []);
-
-const isLessonCompleted = computed<boolean>(() => {
-  let isCompleted: boolean;
-
-  if (!progress.value[chapter.value.number - 1]) {
-    isCompleted = false;
-  } else if (
-    !progress.value[chapter.value.number - 1][lesson.value.number - 1]
-  ) {
-    isCompleted = false;
-  } else {
-    isCompleted =
-      progress.value[chapter.value.number - 1][lesson.value.number - 1];
-  }
-
-  return isCompleted;
-});
-
-const toggleComplete = () => {
-  if (!progress.value[chapter.value.number - 1]) {
-    progress.value[chapter.value.number - 1] = [];
-  }
-  progress.value[chapter.value.number - 1][lesson.value!.number - 1] =
-    !isLessonCompleted.value;
-};
 </script>
