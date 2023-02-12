@@ -32,5 +32,5 @@ export default defineEventHandler(async (event) => {
     user: { email: userEmail },
   } = event.context;
 
-  // return prisma.lessonProgress.up
+  return prisma.lesson
 });
