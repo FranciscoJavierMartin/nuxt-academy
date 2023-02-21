@@ -20,6 +20,7 @@
     "@pinia/nuxt": "^0.4.6",
     "@prisma/client": "^4.10.1",
     "pinia": "^2.0.30",
+    "stripe": "^11.11.0",
     "vite-plugin-vsharp": "^1.3.0"
   },
   "prisma": {
